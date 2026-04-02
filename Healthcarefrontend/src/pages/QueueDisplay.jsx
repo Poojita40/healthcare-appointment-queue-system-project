@@ -24,7 +24,7 @@ const [queue,setQueue] = useState([]);
 
 const getQueue = ()=>{
 
-api.get("/appointments/queue",{
+api.get("/api/appointments/queue",{
 params:{doctorId,date}
 })
 .then(res=>setQueue(res.data));

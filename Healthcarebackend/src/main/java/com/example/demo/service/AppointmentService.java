@@ -160,4 +160,41 @@ public class AppointmentService {
 
         return result;
     }
+
+    // ✅ Get Patient Queue Status (For Frontend)
+    public java.util.Map<String, Object> getPatientQueueStatusByPhone(String phone) {
+        List<Appointment> appointments = appointmentRepository.findByPatientPhone(phone);
+        if (appointments.isEmpty()) {
+            throw new RuntimeException("No appointment found for this phone number");
+        }
+
+        // Get the latest/active one
+        Appointment a = appointments.get(appointments.size() - 1);
+
+        java.util.Map<String, Object> status = new java.util.HashMap<>();
+        status.put("patientName", a.getPatient().getName());
+        status.put("doctor", a.getDoctor().getName());
+        status.put("queueNumber", a.getQueueNumber());
+        status.put("currentServing", 1); // Mock: in a real app, this would be dynamic
+        status.put("estimatedTime", (a.getQueueNumber() - 1) * 10);
+
+        return status;
+    }
+
+    public java.util.Map<String, Object> getPatientQueueStatusByPatientId(Long patientId) {
+        List<Appointment> appointments = appointmentRepository.findByPatientId(patientId);
+        if (appointments.isEmpty()) {
+            throw new RuntimeException("No appointment found");
+        }
+
+        Appointment a = appointments.get(appointments.size() - 1);
+
+        java.util.Map<String, Object> status = new java.util.HashMap<>();
+        status.put("doctor", a.getDoctor().getName());
+        status.put("queueNumber", a.getQueueNumber());
+        status.put("currentServing", 1);
+        status.put("estimatedTime", (a.getQueueNumber() - 1) * 10);
+
+        return status;
+    }
 }

@@ -33,7 +33,7 @@ function PatientList() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    api.get("/patients")
+    api.get("/api/patients")
       .then(res => setPatients(res.data))
       .catch(() => {
         // Mock data for demonstration if API is unavailable

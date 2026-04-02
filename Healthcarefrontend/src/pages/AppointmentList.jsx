@@ -29,7 +29,7 @@ function AppointmentList() {
   const [appointments, setAppointments] = useState([]);
 
   const loadAppointments = () => {
-    api.get("/appointments")
+    api.get("/api/appointments")
       .then(res => setAppointments(res.data))
       .catch(() => {
         // Mock data
@@ -45,7 +45,7 @@ function AppointmentList() {
   }, []);
 
   const cancelAppointment = (id) => {
-    api.delete(`/appointments/${id}`)
+    api.delete(`/api/appointments/${id}`)
       .then(() => {
         toast.success("Appointment cancelled successfully");
         loadAppointments();

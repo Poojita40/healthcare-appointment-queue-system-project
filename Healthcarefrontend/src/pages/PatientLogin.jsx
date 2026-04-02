@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import api from "../api/api";
 import { useNavigate } from "react-router-dom";
 import {
   TextField,
@@ -42,8 +42,8 @@ function PatientLogin() {
     setLoading(true);
 
     try {
-      const res = await axios.post(
-        "https://healthcare-backend-api-vnfk.onrender.com/patients/login", // ✅ FIXED COMMA
+      const res = await api.post(
+        "/api/patients/login",
         { id, password }
       );
 

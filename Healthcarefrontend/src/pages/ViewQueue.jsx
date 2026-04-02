@@ -33,7 +33,7 @@ function ViewQueue() {
   }, []);
 
   const fetchQueue = () => {
-    api.get("/appointments")
+    api.get("/api/appointments")
       .then(res => {
         setQueue(res.data);
         setLoading(false);

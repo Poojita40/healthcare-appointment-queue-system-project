@@ -40,7 +40,7 @@ function AddPatient() {
 
     try {
       // ✅ Save patient (your existing API)
-      await api.post("/patients", patient);
+      await api.post("/api/patients", patient);
 
       // 🔥 Send email (NEW)
       await sendEmail(patient.email, token);

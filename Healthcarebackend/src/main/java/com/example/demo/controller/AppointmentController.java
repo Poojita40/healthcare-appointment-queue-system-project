@@ -11,8 +11,7 @@ import com.example.demo.service.AppointmentService;
 import com.example.demo.dto.AppointmentResponse;
 
 @RestController
-@RequestMapping("/appointments")
-@CrossOrigin(origins = "*")
+@RequestMapping("/api/appointments")
 public class AppointmentController {
 
     @Autowired

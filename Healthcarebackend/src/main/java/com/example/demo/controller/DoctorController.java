@@ -9,8 +9,7 @@ import com.example.demo.model.Doctor;
 import com.example.demo.repository.DoctorRepository;
 
 @RestController
-@RequestMapping("/doctors")
-@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/api/doctors")
 public class DoctorController {
 
     @Autowired

@@ -17,8 +17,9 @@ setDoctor({...doctor,[e.target.name]:e.target.value});
 
 const submitDoctor=()=>{
 
-api.post("/doctors",doctor)
-.then(()=>alert("Doctor Added"));
+api.post("/api/doctors",doctor)
+.then(()=>alert("Doctor Added"))
+.catch(err => console.error(err));
 
 };
 

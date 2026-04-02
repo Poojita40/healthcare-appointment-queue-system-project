@@ -10,7 +10,6 @@ import com.example.demo.service.QueueService;
 
 @RestController
 @RequestMapping("/api/chat")
-@CrossOrigin(origins = "*")
 public class ChatController {
 
     @Autowired

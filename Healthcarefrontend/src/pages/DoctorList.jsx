@@ -32,7 +32,7 @@ function DoctorList() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    api.get("/doctors")
+    api.get("/api/doctors")
       .then(res => setDoctors(res.data))
       .catch(() => {
         // Mock data for demonstration

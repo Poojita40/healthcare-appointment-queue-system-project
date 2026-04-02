@@ -7,8 +7,7 @@ import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 
 @RestController
-@RequestMapping("/auth")
-@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/api/auth")
 public class AuthController {
 
     @Autowired

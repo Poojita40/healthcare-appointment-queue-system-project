@@ -11,7 +11,7 @@ const [data,setData]=useState([]);
 
 const getWaitingTime=()=>{
 
-api.get("/appointments/waiting-time",{params:{doctorId,date}})
+api.get("/api/appointments/waiting-time",{params:{doctorId,date}})
 .then(res=>setData(res.data));
 
 };

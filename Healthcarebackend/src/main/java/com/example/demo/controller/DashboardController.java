@@ -9,8 +9,7 @@ import com.example.demo.repository.*;
 import com.example.demo.model.Patient;
 
 @RestController
-@RequestMapping("/dashboard")
-@CrossOrigin(origins = "*")
+@RequestMapping("/api/dashboard")
 public class DashboardController {
 
     @Autowired private PatientRepository patientRepository;

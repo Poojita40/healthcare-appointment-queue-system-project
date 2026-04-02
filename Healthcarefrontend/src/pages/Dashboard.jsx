@@ -33,6 +33,12 @@ function Dashboard() {
     ]
   });
 
+  useEffect(() => {
+    api.get("/api/dashboard/stats")
+      .then(res => setStats(res.data))
+      .catch(err => console.error("Error fetching dashboard stats:", err));
+  }, []);
+
   const today = "Thursday, April 2, 2026";
 
   const colors = {

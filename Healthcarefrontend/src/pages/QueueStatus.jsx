@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import api from "../api/api";
 
 function QueueStatus() {
 
@@ -9,8 +9,8 @@ function QueueStatus() {
   const checkQueue = async () => {
     try {
 
-      const res = await axios.get(
-        `https://healthcare-backend-api-vnfk.onrender.com/api/queue/${phone}`
+      const res = await api.get(
+        `/api/queue/${phone}`
       );
 
       setQueue(res.data);

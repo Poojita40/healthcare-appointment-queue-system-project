@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api/api";
 
 function PatientDashboard() {
 
@@ -9,8 +9,8 @@ function PatientDashboard() {
 
     const patientId = localStorage.getItem("patientId");
 
-    axios
-      .get(`https://healthcare-backend-api-vnfk.onrender.com/api/patient/queue/${patientId}`)
+    api
+      .get(`/api/patients/queue/${patientId}`)
       .then((res) => {
         setQueue(res.data);
       })

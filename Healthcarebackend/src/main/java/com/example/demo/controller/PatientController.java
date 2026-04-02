@@ -7,19 +7,41 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.model.Patient;
 import com.example.demo.repository.PatientRepository;
+import com.example.demo.service.AppointmentService;
 
 @RestController
-@RequestMapping("/patients")
-@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/api/patients")
 public class PatientController {
 
     @Autowired
     private PatientRepository patientRepository;
 
+    @Autowired
+    private AppointmentService appointmentService;
+
+    // ✅ Get Patient Queue Status
+    @GetMapping("/queue/{id}")
+    public java.util.Map<String, Object> getQueueStatus(@PathVariable Long id) {
+        return appointmentService.getPatientQueueStatusByPatientId(id);
+    }
+
     // ✅ Add Patient
     @PostMapping
     public Patient addPatient(@RequestBody Patient patient) {
         return patientRepository.save(patient);
+    }
+
+    // ✅ Patient Login
+    @PostMapping("/login")
+    public Patient login(@RequestBody Patient loginRequest) {
+        Patient patient = patientRepository.findById(loginRequest.getId())
+                .orElseThrow(() -> new RuntimeException("Patient not found"));
+
+        if (patient.getPassword() != null && patient.getPassword().equals(loginRequest.getPassword())) {
+            return patient;
+        } else {
+            throw new RuntimeException("Invalid Credentials");
+        }
     }
 
     // ✅ Get All Patients
@@ -49,6 +71,9 @@ public class PatientController {
         patient.setGender(updatedPatient.getGender());
         patient.setAddress(updatedPatient.getAddress());
         patient.setDisease(updatedPatient.getDisease());
+        if (updatedPatient.getPassword() != null) {
+            patient.setPassword(updatedPatient.getPassword());
+        }
 
         return patientRepository.save(patient);
     }

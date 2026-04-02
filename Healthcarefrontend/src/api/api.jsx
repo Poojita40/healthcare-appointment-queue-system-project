@@ -17,9 +17,9 @@ export const sendMessage = (message) => {
 
 // queue (email + token)
 export const addPatient = (email, token) => {
-  return api.post("/queue/add", null, {
+  return api.post("/api/queue/add", null, {
     params: { email, token },
   });
 };
 
-export default api;
+export default a

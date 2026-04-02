@@ -50,10 +50,10 @@ function BookAppointment() {
 
   useEffect(() => {
     // Load patients and doctors for selection
-    api.get("/patients").then(res => setPatients(res.data)).catch(() => {
+    api.get("/api/patients").then(res => setPatients(res.data)).catch(() => {
       setPatients([{ id: 101, name: "John Doe" }, { id: 102, name: "Jane Smith" }]);
     });
-    api.get("/doctors").then(res => setDoctors(res.data)).catch(() => {
+    api.get("/api/doctors").then(res => setDoctors(res.data)).catch(() => {
       setDoctors([{ id: 1, name: "Dr. Gregory House", specialty: "Diagnostics" }, { id: 2, name: "Dr. Shaun Murphy", specialty: "Surgery" }]);
     });
   }, []);
@@ -72,7 +72,7 @@ function BookAppointment() {
   };
 
   const handleSubmit = () => {
-    api.post("/appointments/book", null, { params: formData })
+    api.post("/api/appointments/book", null, { params: formData })
       .then(() => {
         setSuccess(true);
         setTimeout(() => navigate("/dashboard"), 2000);
