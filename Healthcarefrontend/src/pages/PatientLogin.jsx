@@ -43,7 +43,7 @@ function PatientLogin() {
 
     try {
       const res = await axios.post(
-        "https://healthcare-backend-api-vnfk.onrender.com/api/patients/login", // ✅ FIXED COMMA
+        "https://healthcare-backend-api-vnfk.onrender.com/patients/login", // ✅ FIXED COMMA
         { id, password }
       );
 

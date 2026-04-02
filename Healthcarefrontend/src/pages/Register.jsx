@@ -54,7 +54,7 @@ function Register() {
     setLoading(true);
     try {
       // ✅ CORRECT BACKEND URL
-      const response = await api.post("/api/patients/register", user);
+      const response = await api.post("/patients/register", user);
 
       if (response.data) {
         toast.success("Account Created Successfully");

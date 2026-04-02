@@ -37,7 +37,7 @@ function Login() {
     }
     setLoading(true);
     try {
-      const response = await api.post("/auth/login", user);
+      const response = await api.post("/patients/login", user);
       if (response.data) {
         localStorage.setItem("token", "loggedin");
         toast.success("Identity Verified.");
