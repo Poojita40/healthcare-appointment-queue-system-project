@@ -12,11 +12,10 @@ import {
   alpha,
   InputAdornment
 } from "@mui/material";
-import { motion } from "framer-motion";
+import {  } from "framer-motion";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
-// Correct Material UI Icons to prevent the SyntaxError
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
@@ -54,12 +53,15 @@ function Register() {
 
     setLoading(true);
     try {
-      const response = await api.post("/auth/register", user);
+      // ✅ CORRECT BACKEND URL
+      const response = await api.post("/api/patients/register", user);
+
       if (response.data) {
         toast.success("Account Created Successfully");
         setTimeout(() => navigate("/"), 1500);
       }
     } catch (error) {
+      console.error(error);
       toast.error("Registration Failed. Verify network connection.");
     } finally {
       setLoading(false);
@@ -113,9 +115,11 @@ function Register() {
               >
                 <PersonAddAlt1Icon sx={{ fontSize: 30 }} />
               </Avatar>
+
               <Typography variant="h5" sx={{ fontWeight: 800, color: colors.slate }}>
                 Join <span style={{ color: colors.indigo }}>Network</span>
               </Typography>
+
               <Typography variant="body2" sx={{ color: '#64748b', mt: 1 }}>
                 Create your Administrator identity
               </Typography>
@@ -136,6 +140,7 @@ function Register() {
                 }}
                 sx={dashboardInputStyle}
               />
+
               <TextField
                 fullWidth
                 label="Official Email"
@@ -150,6 +155,7 @@ function Register() {
                 }}
                 sx={dashboardInputStyle}
               />
+
               <TextField
                 fullWidth
                 label="Security Password"
@@ -200,7 +206,6 @@ function Register() {
         </motion.div>
       </Container>
 
-      {/* Matching Dashboard Bottom Label */}
       <Box sx={{ position: 'fixed', bottom: 30, display: 'flex', alignItems: 'center', gap: 1, opacity: 0.5 }}>
         <ShowChartIcon sx={{ fontSize: 16, color: "#64748b" }} />
         <Typography variant="caption" sx={{ fontWeight: 800, color: '#64748b', letterSpacing: '2px' }}>

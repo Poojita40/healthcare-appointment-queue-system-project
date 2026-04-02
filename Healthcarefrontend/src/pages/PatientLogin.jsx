@@ -13,7 +13,7 @@ import {
   IconButton,
   alpha
 } from "@mui/material";
-import {  } from "framer-motion";
+import {  } from "framer-motion"; // ✅ FIXED
 import { toast } from "react-hot-toast";
 import {
   UserCircle,
@@ -43,7 +43,7 @@ function PatientLogin() {
 
     try {
       const res = await axios.post(
-        "https://healthcare-backend-api-vnfk.onrender.com/patients/login",
+        "https://healthcare-backend-api-vnfk.onrender.com/api/patients/login", // ✅ FIXED COMMA
         { id, password }
       );
 
