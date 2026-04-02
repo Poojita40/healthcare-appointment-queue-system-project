@@ -3,7 +3,7 @@ import {
   TextField, Button, Typography, Box, InputAdornment, Avatar,
   Paper, Stack, IconButton, alpha, Container
 } from "@mui/material";
-import { motion } from "framer-motion";
+import {  } from "framer-motion"; // ✅ FIXED
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
@@ -44,6 +44,7 @@ function Login() {
         setTimeout(() => navigate("/dashboard"), 1000);
       }
     } catch (error) {
+      console.error(error);
       toast.error("Authentication Denied");
     } finally {
       setLoading(false);
@@ -62,6 +63,7 @@ function Login() {
             <Typography variant="h5" sx={{ fontWeight: 800, color: colors.slate, mb: 1 }}>
               <span style={{ color: colors.indigo }}>Smart</span>Health
             </Typography>
+
             <Typography variant="caption" sx={{ color: '#64748b', fontWeight: 700, display: 'block', mb: 4, textTransform: 'uppercase', letterSpacing: 1 }}>
               Staff Access Portal
             </Typography>
@@ -126,14 +128,19 @@ function Login() {
               </Button>
 
               <Typography variant="body2" sx={{ color: '#94a3b8', mt: 2 }}>
-                New Staff? <span style={{ color: colors.indigo, cursor: 'pointer', fontWeight: 800 }} onClick={() => navigate("/register")}>Create Account</span>
+                New Staff?{" "}
+                <span
+                  style={{ color: colors.indigo, cursor: 'pointer', fontWeight: 800 }}
+                  onClick={() => navigate("/register")}
+                >
+                  Create Account
+                </span>
               </Typography>
             </Stack>
           </Paper>
         </motion.div>
       </Container>
 
-      {/* Footer Branding to match your Dashboard */}
       <Box sx={{ position: 'fixed', bottom: 30, display: 'flex', alignItems: 'center', gap: 1, opacity: 0.5 }}>
         <ShowChartIcon sx={{ fontSize: 16, color: "#64748b" }} />
         <Typography variant="caption" sx={{ fontWeight: 800, color: '#64748b', letterSpacing: '2px' }}>

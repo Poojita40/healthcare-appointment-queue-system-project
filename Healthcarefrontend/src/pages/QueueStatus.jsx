@@ -9,11 +9,14 @@ function QueueStatus() {
   const checkQueue = async () => {
     try {
 
-      const res = await axios.get(`http://localhost:8081/api/queue/${phone}`);
+      const res = await axios.get(
+        `https://healthcare-backend-api-vnfk.onrender.com/api/queue/${phone}`
+      );
 
       setQueue(res.data);
 
     } catch (error) {
+      console.error(error); // ✅ added for debugging
       alert("Patient not found");
     }
   };

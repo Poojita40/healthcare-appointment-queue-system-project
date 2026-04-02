@@ -1,24 +1,25 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:8081";
+// ✅ CHANGE THIS (IMPORTANT)
+const BASE_URL = "https://healthcare-backend-api-vnfk.onrender.com";
 
 const api = axios.create({
-    baseURL: BASE_URL
+  baseURL: BASE_URL,
 });
 
 // chatbot
 export const sendMessage = (message) => {
-    return api.post("/api/chat", {
-        message,
-        sessionId: localStorage.getItem("sessionId")
-    });
+  return api.post("/api/chat", {
+    message,
+    sessionId: localStorage.getItem("sessionId"),
+  });
 };
 
-// queue
+// queue (email + token)
 export const addPatient = (email, token) => {
-    return api.post("/queue/add", null, {
-        params: { email, token }
-    });
+  return api.post("/queue/add", null, {
+    params: { email, token },
+  });
 };
 
 export default api;

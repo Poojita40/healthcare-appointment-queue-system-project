@@ -15,12 +15,18 @@ function Chatbot() {
     const handleSend = async () => {
         if (!message.trim()) return;
 
+        // ✅ store user message
         setChat(prev => [...prev, { user: message }]);
 
         try {
             const res = await sendMessage(message);
-            setChat(prev => [...prev, { bot: res.data.reply }]);
+
+            // ✅ safe access (prevents crash if reply missing)
+            const reply = res?.data?.reply || "No response";
+
+            setChat(prev => [...prev, { bot: reply }]);
         } catch (error) {
+            console.error(error); // ✅ added for debugging
             setChat(prev => [...prev, { bot: "Server error ❌" }]);
         }
 
@@ -66,8 +72,16 @@ function Chatbot() {
                     <div style={{ flex: 1, overflowY: "auto", padding: "10px" }}>
                         {chat.map((c, i) => (
                             <div key={i}>
-                                {c.user && <p style={{ textAlign: "right" }}><b>You:</b> {c.user}</p>}
-                                {c.bot && <p><b>Bot:</b> {c.bot}</p>}
+                                {c.user && (
+                                    <p style={{ textAlign: "right" }}>
+                                        <b>You:</b> {c.user}
+                                    </p>
+                                )}
+                                {c.bot && (
+                                    <p>
+                                        <b>Bot:</b> {c.bot}
+                                    </p>
+                                )}
                             </div>
                         ))}
                     </div>

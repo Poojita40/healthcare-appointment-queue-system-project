@@ -10,7 +10,7 @@ function PatientDashboard() {
     const patientId = localStorage.getItem("patientId");
 
     axios
-      .get(`http://localhost:8081/api/patient/queue/${patientId}`)
+      .get(`https://healthcare-backend-api-vnfk.onrender.com/api/patient/queue/${patientId}`)
       .then((res) => {
         setQueue(res.data);
       })
