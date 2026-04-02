@@ -52,23 +52,36 @@ function Login() {
   };
 
   return (
-    <Box sx={{ height: "100vh", width: "100vw", display: "flex", justifyContent: "center", alignItems: "center", bgcolor: colors.bg }}>
-      <Container maxWidth="xs">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <Paper elevation={0} sx={{ p: 5, borderRadius: '24px', border: `1px solid ${colors.border}`, bgcolor: '#fff', textAlign: 'center' }}>
-            <Avatar sx={{ bgcolor: alpha(colors.indigo, 0.1), color: colors.indigo, width: 64, height: 64, mx: 'auto', mb: 2 }}>
-              <AdminPanelSettingsIcon sx={{ fontSize: 32 }} />
+    <Box sx={{ 
+      position: 'relative',
+      height: "100vh", 
+      width: "100vw", 
+      display: "flex", 
+      justifyContent: "center", 
+      alignItems: "center", 
+      bgcolor: 'transparent',
+      overflow: 'hidden'
+    }}>
+      {/* Background Blobs */}
+      <Box className="glass-blob" sx={{ top: '-10%', left: '-10%', width: '40vw', height: '40vw', background: 'rgba(99, 102, 241, 0.15)' }} />
+      <Box className="glass-blob" sx={{ bottom: '10%', right: '-5%', width: '30vw', height: '30vw', background: 'rgba(168, 85, 247, 0.15)', animationDelay: '-5s' }} />
+
+      <Container maxWidth="xs" sx={{ position: 'relative', zIndex: 1 }}>
+        <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+          <Box className="glass-card" sx={{ p: 6, textAlign: 'center', bgcolor: 'rgba(255,255,255,0.85)' }}>
+            <Avatar component={motion.div} whileHover={{ rotate: 360 }} transition={{ duration: 0.8 }} sx={{ bgcolor: alpha(colors.indigo, 0.1), color: colors.indigo, width: 72, height: 72, mx: 'auto', mb: 3, boxShadow: `0 8px 24px ${alpha(colors.indigo, 0.2)}` }}>
+              <AdminPanelSettingsIcon sx={{ fontSize: 40 }} />
             </Avatar>
 
-            <Typography variant="h5" sx={{ fontWeight: 800, color: colors.slate, mb: 1 }}>
-              <span style={{ color: colors.indigo }}>Smart</span>Health
+            <Typography variant="h4" sx={{ fontWeight: 900, color: colors.slate, mb: 1, letterSpacing: '-1px' }}>
+              <span className="text-gradient">Smart</span>Health
             </Typography>
 
-            <Typography variant="caption" sx={{ color: '#64748b', fontWeight: 700, display: 'block', mb: 4, textTransform: 'uppercase', letterSpacing: 1 }}>
+            <Typography variant="caption" sx={{ color: '#64748b', fontWeight: 800, display: 'block', mb: 5, textTransform: 'uppercase', letterSpacing: 2 }}>
               Staff Access Portal
             </Typography>
 
-            <Stack spacing={2.5}>
+            <Stack spacing={3}>
               <TextField
                 fullWidth
                 label="Staff Email"
@@ -108,27 +121,28 @@ function Login() {
               />
 
               <Button
+                component={motion.button}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 variant="contained"
                 fullWidth
                 disabled={loading}
                 onClick={login}
+                className="btn-premium"
                 endIcon={!loading && <ArrowForwardIcon />}
                 sx={{
-                  py: 1.8,
-                  borderRadius: '12px',
+                  py: 2,
                   bgcolor: colors.indigo,
-                  fontWeight: 700,
-                  textTransform: 'none',
-                  fontSize: '1rem',
-                  boxShadow: `0 8px 20px ${alpha(colors.indigo, 0.2)}`,
+                  fontSize: '1.1rem',
+                  boxShadow: `0 12px 24px ${alpha(colors.indigo, 0.3)}`,
                   '&:hover': { bgcolor: '#4f46e5' }
                 }}
               >
                 {loading ? "Authenticating..." : "Sign In"}
               </Button>
 
-              <Typography variant="body2" sx={{ color: '#94a3b8', mt: 2 }}>
-                New Staff?{" "}
+              <Typography variant="body2" sx={{ color: '#64748b', mt: 3, fontWeight: 500 }}>
+                New Staff Member?{" "}
                 <span
                   style={{ color: colors.indigo, cursor: 'pointer', fontWeight: 800 }}
                   onClick={() => navigate("/register")}
@@ -137,14 +151,14 @@ function Login() {
                 </span>
               </Typography>
             </Stack>
-          </Paper>
+          </Box>
         </motion.div>
       </Container>
 
-      <Box sx={{ position: 'fixed', bottom: 30, display: 'flex', alignItems: 'center', gap: 1, opacity: 0.5 }}>
-        <ShowChartIcon sx={{ fontSize: 16, color: "#64748b" }} />
-        <Typography variant="caption" sx={{ fontWeight: 800, color: '#64748b', letterSpacing: '2px' }}>
-          HOSPITAL SYSTEM v4.2.0
+      <Box sx={{ position: 'fixed', bottom: 30, display: 'flex', alignItems: 'center', gap: 1.5, opacity: 0.6 }}>
+        <ShowChartIcon sx={{ fontSize: 20, color: colors.indigo }} />
+        <Typography variant="caption" sx={{ fontWeight: 900, color: colors.slate, letterSpacing: '4px' }}>
+          SMARTHEALTH OS v4.2
         </Typography>
       </Box>
     </Box>

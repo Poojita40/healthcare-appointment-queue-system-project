@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import {
   Grid, Typography, Box, Avatar, Container, Fade, Grow, Button, Chip, Paper, Stack, alpha
 } from "@mui/material";
+import { motion, AnimatePresence } from "framer-motion";
 
 // Icons
 import PeopleIcon from "@mui/icons-material/People";
@@ -59,159 +60,227 @@ function Dashboard() {
   ];
 
   return (
-    <Box sx={{ width: '100%', minHeight: '100vh', bgcolor: '#f8fafc', display: 'flex', flexDirection: 'column' }}>
-      <Container maxWidth={false} sx={{ py: 4, px: { xs: 2, md: 6 } }}>
+    <Box sx={{ 
+      position: 'relative',
+      width: '100%', 
+      minHeight: '100vh', 
+      bgcolor: 'transparent', 
+      display: 'flex', 
+      flexDirection: 'column',
+      overflow: 'hidden'
+    }}>
+      {/* Background Blobs */}
+      <Box className="glass-blob" sx={{ top: '-10%', left: '-10%', width: '40vw', height: '40vw', background: 'rgba(99, 102, 241, 0.15)' }} />
+      <Box className="glass-blob" sx={{ bottom: '10%', right: '-5%', width: '30vw', height: '30vw', background: 'rgba(168, 85, 247, 0.15)', animationDelay: '-5s' }} />
+      <Box className="glass-blob" sx={{ top: '40%', left: '20%', width: '20vw', height: '20vw', background: 'rgba(16, 185, 129, 0.1)', animationDelay: '-10s' }} />
+
+      <Container maxWidth={false} sx={{ py: 6, px: { xs: 2, md: 8 }, position: 'relative', zIndex: 1 }}>
 
         {/* HEADER */}
-        <Fade in timeout={800}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 5 }}>
-            <Stack direction="row" spacing={2} alignItems="center">
-              <Avatar sx={{ bgcolor: colors.indigo, width: 50, height: 50, boxShadow: `0 8px 20px ${alpha(colors.indigo, 0.3)}` }}>
-                <AdminPanelSettingsIcon />
+        <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 6, flexWrap: 'wrap', gap: 3 }}>
+            <Stack direction="row" spacing={3} alignItems="center">
+              <Avatar 
+                component={motion.div}
+                whileHover={{ rotate: 15, scale: 1.1 }}
+                sx={{ 
+                  bgcolor: colors.indigo, 
+                  width: 64, 
+                  height: 64, 
+                  boxShadow: `0 12px 32px ${alpha(colors.indigo, 0.4)}`,
+                  fontSize: '2rem'
+                }}
+              >
+                <AdminPanelSettingsIcon fontSize="large" />
               </Avatar>
               <Box>
-                <Typography variant="h4" sx={{ fontWeight: 800, color: colors.slate, letterSpacing: '-0.5px' }}>
-                  Welcome, <span style={{ color: colors.indigo }}>Administrator</span>
+                <Typography variant="h3" sx={{ fontWeight: 900, color: colors.slate, letterSpacing: '-1.5px', fontSize: { xs: '2rem', md: '2.5rem' } }}>
+                  Welcome, <span className="text-gradient">Administrator</span>
                 </Typography>
-                <Typography variant="caption" sx={{ color: '#64748b', fontWeight: 600, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                  <AccessTimeFilledIcon sx={{ fontSize: 16 }} /> {today}
+                <Typography variant="subtitle1" sx={{ color: '#64748b', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <AccessTimeFilledIcon sx={{ fontSize: 18, color: colors.indigo }} /> {today}
                 </Typography>
               </Box>
             </Stack>
             <Button
+              component={motion.button}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               variant="contained"
               startIcon={<AddCircleOutlineIcon />}
               onClick={() => navigate("/add-patient")}
-              sx={{ bgcolor: colors.indigo, borderRadius: '12px', px: 4, py: 1.8, fontWeight: 700, textTransform: 'none', boxShadow: `0 8px 16px ${alpha(colors.indigo, 0.2)}`, '&:hover': { bgcolor: '#4f46e5' } }}
+              className="btn-premium"
+              sx={{ 
+                bgcolor: colors.indigo, 
+                px: 5, 
+                boxShadow: `0 12px 24px ${alpha(colors.indigo, 0.3)}`,
+                '&:hover': { bgcolor: '#4f46e5' }
+              }}
             >
               New Patient
             </Button>
           </Box>
-        </Fade>
+        </motion.div>
 
-        <Grid container spacing={4}>
+        <Grid container spacing={5}>
           <Grid item xs={12} lg={8.5}>
             {/* STATS */}
-            <Grid container spacing={3} sx={{ mb: 4 }}>
+            <Grid container spacing={3} sx={{ mb: 5 }}>
               {[
                 { label: "Total Patients", value: stats.patients, icon: <PeopleIcon />, color: colors.indigo },
                 { label: "Active Doctors", value: stats.doctors, icon: <LocalHospitalIcon />, color: colors.emerald },
                 { label: "Weekly Visits", value: stats.appointments, icon: <EventAvailableIcon />, color: colors.amber },
               ].map((item, index) => (
                 <Grid item xs={12} sm={4} key={index}>
-                  <Grow in timeout={1000 + (index * 200)}>
-                    <Paper elevation={0} sx={{ p: 3, borderRadius: '24px', border: '1px solid #eef2f6', display: 'flex', flexDirection: 'column', height: '100%', boxShadow: '0 4px 20px rgba(0,0,0,0.02)' }}>
-                      <Box sx={{ p: 1.5, borderRadius: '12px', bgcolor: alpha(item.color, 0.1), color: item.color, width: 'fit-content', mb: 2 }}>
-                        {React.cloneElement(item.icon, { sx: { fontSize: 30 } })}
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.2 + index * 0.1, duration: 0.5 }}
+                  >
+                    <Box className="glass-card" sx={{ p: 4, height: '100%', display: 'flex', flexDirection: 'column' }}>
+                      <Box sx={{ 
+                        p: 2, 
+                        borderRadius: '20px', 
+                        bgcolor: alpha(item.color, 0.1), 
+                        color: item.color, 
+                        width: 'fit-content', 
+                        mb: 3,
+                        display: 'flex',
+                        boxShadow: `0 8px 16px ${alpha(item.color, 0.1)}`
+                      }}>
+                        {React.cloneElement(item.icon, { sx: { fontSize: 32 } })}
                       </Box>
-                      <Typography variant="h3" sx={{ fontWeight: 800, color: colors.slate }}>{item.value}</Typography>
-                      <Typography variant="subtitle2" sx={{ color: '#64748b', fontWeight: 700, textTransform: 'uppercase' }}>{item.label}</Typography>
-                    </Paper>
-                  </Grow>
+                      <Typography variant="h2" sx={{ fontWeight: 900, color: colors.slate, mb: 0.5 }}>{item.value}</Typography>
+                      <Typography variant="subtitle2" sx={{ color: '#64748b', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '1px' }}>{item.label}</Typography>
+                    </Box>
+                  </motion.div>
                 </Grid>
               ))}
             </Grid>
 
             {/* CHART */}
-            <Paper elevation={0} sx={{ p: 4, borderRadius: '24px', border: '1px solid #eef2f6', mb: 4 }}>
-              <Typography variant="h6" sx={{ fontWeight: 800, mb: 4 }}>Analytics Overview</Typography>
-              <Box sx={{ width: '100%', height: 350 }}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={chartData}>
-                    <defs>
-                      <linearGradient id="pFill" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor={colors.indigo} stopOpacity={0.2} />
-                        <stop offset="95%" stopColor={colors.indigo} stopOpacity={0} />
-                      </linearGradient>
-                    </defs>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                    <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 13 }} />
-                    <YAxis axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 13 }} />
-                    <Tooltip contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 8px 20px rgba(0,0,0,0.05)' }} />
-                    <Area type="monotone" dataKey="visits" stroke={colors.indigo} strokeWidth={4} fillOpacity={1} fill="url(#pFill)" />
-                  </AreaChart>
-                </ResponsiveContainer>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.8 }}
+            >
+              <Box className="glass-card" sx={{ p: 5, mb: 5 }}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 6 }}>
+                  <Typography variant="h5" sx={{ fontWeight: 900, color: colors.slate }}>Analytics Overview</Typography>
+                  <Chip label="Live Updates" variant="outlined" sx={{ fontWeight: 700, borderRadius: '8px', color: colors.indigo, borderColor: alpha(colors.indigo, 0.3) }} />
+                </Box>
+                <Box sx={{ width: '100%', height: 400 }}>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <AreaChart data={chartData}>
+                      <defs>
+                        <linearGradient id="pFill" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor={colors.indigo} stopOpacity={0.3} />
+                          <stop offset="95%" stopColor={colors.indigo} stopOpacity={0} />
+                        </linearGradient>
+                      </defs>
+                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={alpha('#94a3b8', 0.1)} />
+                      <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 13, fontWeight: 600 }} />
+                      <YAxis axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 13, fontWeight: 600 }} />
+                      <Tooltip 
+                        contentStyle={{ 
+                          borderRadius: '20px', 
+                          border: 'none', 
+                          boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
+                          backdropFilter: 'blur(10px)',
+                          background: 'rgba(255,255,255,0.85)'
+                        }} 
+                      />
+                      <Area type="monotone" dataKey="visits" stroke={colors.indigo} strokeWidth={6} fillOpacity={1} fill="url(#pFill)" dot={{ r: 6, fill: colors.indigo, strokeWidth: 3, stroke: '#fff' }} activeDot={{ r: 8, strokeWidth: 0 }} />
+                    </AreaChart>
+                  </ResponsiveContainer>
+                </Box>
               </Box>
-            </Paper>
+            </motion.div>
           </Grid>
 
           {/* SIDEBAR */}
           <Grid item xs={12} lg={3.5}>
-            <Stack spacing={4}>
-              <Box sx={{ p: 3, borderRadius: '24px', bgcolor: alpha(colors.rose, 0.03), border: `1px solid ${alpha(colors.rose, 0.1)}` }}>
-                <Typography variant="subtitle1" sx={{ fontWeight: 800, color: colors.rose, mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <WarningAmberIcon sx={{ fontSize: 22 }} /> Alerts
-                </Typography>
-                <Paper elevation={0} sx={{ p: 2.5, borderRadius: '16px', borderLeft: `5px solid ${colors.rose}` }}>
-                  <Typography variant="subtitle2" sx={{ fontWeight: 800 }}>Emergency Sync</Typography>
-                  <Typography variant="body2" color="textSecondary">Updates pending.</Typography>
-                </Paper>
-              </Box>
+            <Stack spacing={5}>
+              <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.6 }}>
+                <Box sx={{ p: 4, borderRadius: '32px', bgcolor: alpha(colors.rose, 0.05), border: `1px solid ${alpha(colors.rose, 0.1)}`, boxShadow: `0 20px 40px ${alpha(colors.rose, 0.05)}` }}>
+                  <Typography variant="subtitle1" sx={{ fontWeight: 900, color: colors.rose, mb: 3, display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                    <WarningAmberIcon /> Emergency Alerts
+                  </Typography>
+                  <Paper className="glass-card" sx={{ p: 3, borderLeft: `6px solid ${colors.rose}`, borderRadius: '20px' }}>
+                    <Typography variant="subtitle1" sx={{ fontWeight: 800 }}>Server Synchronization</Typography>
+                    <Typography variant="body2" sx={{ color: '#64748b', mt: 0.5, fontWeight: 500 }}>New medical records pending sync from secondary center.</Typography>
+                  </Paper>
+                </Box>
+              </motion.div>
 
-              <Paper elevation={0} sx={{ p: 3, borderRadius: '24px', border: '1px solid #eef2f6' }}>
-                <Typography variant="h6" sx={{ fontWeight: 800, mb: 3 }}>Live Activity</Typography>
-                <Stack spacing={3}>
-                  {stats.activities.map((item, i) => (
-                    <Box key={i} sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                      <Avatar sx={{ bgcolor: colors.slate, width: 40, height: 40 }}>{item.name[0]}</Avatar>
-                      <Box sx={{ flexGrow: 1 }}>
-                        <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>{item.name}</Typography>
-                        <Typography variant="caption" color="textSecondary">{item.disease}</Typography>
+              <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.7 }}>
+                <Box className="glass-card" sx={{ p: 4 }}>
+                  <Typography variant="h6" sx={{ fontWeight: 900, mb: 4 }}>Recent Activity</Typography>
+                  <Stack spacing={3.5}>
+                    {stats.activities.map((item, i) => (
+                      <Box key={i} sx={{ display: 'flex', alignItems: 'center', gap: 2.5 }}>
+                        <Avatar sx={{ bgcolor: colors.indigo, width: 44, height: 44, fontWeight: 800 }}>{item.name[0]}</Avatar>
+                        <Box sx={{ flexGrow: 1 }}>
+                          <Typography variant="subtitle1" sx={{ fontWeight: 800 }}>{item.name}</Typography>
+                          <Typography variant="caption" sx={{ color: '#64748b', fontWeight: 600 }}>Diagnosed: {item.disease}</Typography>
+                        </Box>
+                        <Chip label="Active" size="small" sx={{ fontWeight: 800, bgcolor: alpha(colors.emerald, 0.1), color: colors.emerald, borderRadius: '8px' }} />
                       </Box>
-                      <Chip label="New" size="small" sx={{ fontWeight: 700, bgcolor: alpha(colors.emerald, 0.1), color: colors.emerald }} />
-                    </Box>
-                  ))}
-                </Stack>
-              </Paper>
+                    ))}
+                  </Stack>
+                </Box>
+              </motion.div>
             </Stack>
           </Grid>
         </Grid>
 
-        {/* SQUARE MANAGEMENT CARDS SECTION */}
-        <Box sx={{ mt: 5 }}>
-          <Typography variant="subtitle2" sx={{ fontWeight: 800, color: '#64748b', mb: 3, textTransform: 'uppercase', letterSpacing: '2px' }}>
-            System Management
+        {/* SYSTEM MANAGEMENT SECTION */}
+        <Box sx={{ mt: 8 }}>
+          <Typography variant="subtitle2" sx={{ fontWeight: 900, color: colors.indigo, mb: 4, textTransform: 'uppercase', letterSpacing: '4px', textAlign: 'center' }}>
+            System Intelligence Management
           </Typography>
-          <Grid container spacing={3}>
+          <Grid container spacing={4} justifyContent="center">
             {actionCards.map((card, index) => (
-              <Grid item xs={6} sm={4} md={2} key={index}>
-                <Paper
-                  elevation={0}
-                  onClick={() => navigate(card.path)}
-                  sx={{
-                    aspectRatio: '1/1', // FORCES SQUARE SHAPE
-                    p: 3,
-                    borderRadius: '32px',
-                    border: '1px solid #eef2f6',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    textAlign: 'center',
-                    transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-                    '&:hover': {
-                      transform: 'translateY(-10px) scale(1.02)',
-                      borderColor: card.color,
-                      boxShadow: `0 20px 40px ${alpha(card.color, 0.15)}`,
-                      bgcolor: alpha(card.color, 0.02)
-                    }
-                  }}
+              <Grid item xs={12} sm={4} md={3} key={index}>
+                <motion.div
+                   whileHover={{ y: -15 }}
+                   initial={{ opacity: 0, y: 20 }}
+                   animate={{ opacity: 1, y: 0 }}
+                   transition={{ delay: 0.8 + index * 0.1 }}
                 >
-                  <Box sx={{
-                    p: 2,
-                    borderRadius: '20px',
-                    bgcolor: alpha(card.color, 0.1),
-                    color: card.color,
-                    mb: 2,
-                    display: 'flex'
-                  }}>
-                    {React.cloneElement(card.icon, { sx: { fontSize: 36 } })}
+                  <Box
+                    onClick={() => navigate(card.path)}
+                    className="glass-card"
+                    sx={{
+                      p: 5,
+                      cursor: 'pointer',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      textAlign: 'center',
+                      '&:hover': {
+                        borderColor: card.color,
+                        bgcolor: alpha(card.color, 0.03)
+                      }
+                    }}
+                  >
+                    <Box sx={{
+                      p: 2.5,
+                      borderRadius: '24px',
+                      bgcolor: alpha(card.color, 0.15),
+                      color: card.color,
+                      mb: 3,
+                      display: 'flex',
+                      boxShadow: `0 12px 24px ${alpha(card.color, 0.15)}`
+                    }}>
+                      {React.cloneElement(card.icon, { sx: { fontSize: 44 } })}
+                    </Box>
+                    <Typography variant="h6" sx={{ fontWeight: 900, color: colors.slate }}>
+                      {card.title}
+                    </Typography>
+                    <Typography variant="caption" sx={{ mt: 1, color: '#64748b', fontWeight: 600 }}>Access Central Data</Typography>
                   </Box>
-                  <Typography variant="subtitle1" sx={{ fontWeight: 800, color: colors.slate, lineHeight: 1.2 }}>
-                    {card.title}
-                  </Typography>
-                </Paper>
+                </motion.div>
               </Grid>
             ))}
           </Grid>

@@ -95,4 +95,10 @@ public class AppointmentController {
                 appointmentService.getQueueWithWaitingTime(doctorId, date)
         );
     }
+
+    // ⭐ Update Appointment Status
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<Appointment> updateStatus(@PathVariable Long id, @RequestParam String status) {
+        return ResponseEntity.ok(appointmentService.updateAppointmentStatus(id, status));
+    }
 }

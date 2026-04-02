@@ -65,77 +65,115 @@ function AddPatient() {
   };
 
   return (
-    <PageContainer>
+    <PageContainer 
+      title="Register New Patient" 
+      subtitle="Complete the form below to add a patient to the healthcare system."
+    >
+      <Stack spacing={3}>
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={6}>
+            <TextField
+              fullWidth
+              label="Name"
+              name="name"
+              value={patient.name}
+              onChange={handleChange}
+              sx={premiumInputStyle}
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <TextField
+              fullWidth
+              label="Email"
+              name="email"
+              value={patient.email}
+              onChange={handleChange}
+              sx={premiumInputStyle}
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <TextField
+              fullWidth
+              label="Phone"
+              name="phone"
+              value={patient.phone}
+              onChange={handleChange}
+              sx={premiumInputStyle}
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <FormControl fullWidth sx={premiumInputStyle}>
+              <InputLabel>Gender</InputLabel>
+              <Select
+                name="gender"
+                value={patient.gender}
+                label="Gender"
+                onChange={handleChange}
+              >
+                <MenuItem value="Male">Male</MenuItem>
+                <MenuItem value="Female">Female</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="Address"
+              name="address"
+              value={patient.address}
+              onChange={handleChange}
+              sx={premiumInputStyle}
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <TextField
+              fullWidth
+              label="Disease / Chief Complaint"
+              name="disease"
+              value={patient.disease}
+              onChange={handleChange}
+              sx={premiumInputStyle}
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <TextField
+              fullWidth
+              label="Token Number"
+              value={token}
+              onChange={(e) => setToken(e.target.value)}
+              sx={premiumInputStyle}
+            />
+          </Grid>
+        </Grid>
 
-      <Typography variant="h5">Add Patient</Typography>
-
-      <Stack spacing={2} marginTop={2}>
-
-        <TextField
-          label="Name"
-          name="name"
-          value={patient.name}
-          onChange={handleChange}
-        />
-
-        <TextField
-          label="Email"
-          name="email"
-          value={patient.email}
-          onChange={handleChange}
-        />
-
-        {/* ❌ PASSWORD REMOVED */}
-
-        <TextField
-          label="Phone"
-          name="phone"
-          value={patient.phone}
-          onChange={handleChange}
-        />
-
-        <FormControl fullWidth>
-          <InputLabel>Gender</InputLabel>
-          <Select
-            name="gender"
-            value={patient.gender}
-            label="Gender"
-            onChange={handleChange}
-          >
-            <MenuItem value="Male">Male</MenuItem>
-            <MenuItem value="Female">Female</MenuItem>
-          </Select>
-        </FormControl>
-
-        <TextField
-          label="Address"
-          name="address"
-          value={patient.address}
-          onChange={handleChange}
-        />
-
-        <TextField
-          label="Disease"
-          name="disease"
-          value={patient.disease}
-          onChange={handleChange}
-        />
-
-        {/* 🔥 TOKEN FIELD (IMPORTANT FOR EMAIL) */}
-        <TextField
-          label="Token Number"
-          value={token}
-          onChange={(e) => setToken(e.target.value)}
-        />
-
-        <Button variant="contained" onClick={submitPatient}>
-          Add Patient
+        <Button 
+          variant="contained" 
+          onClick={submitPatient}
+          className="btn-premium"
+          sx={{ 
+            mt: 4, 
+            bgcolor: '#6366f1', 
+            py: 2, 
+            fontSize: '1rem',
+            boxShadow: '0 10px 25px rgba(99, 102, 241, 0.3)'
+          }}
+        >
+          Add Patient & Call Queue
         </Button>
-
       </Stack>
-
     </PageContainer>
   );
 }
+
+const premiumInputStyle = {
+  '& .MuiOutlinedInput-root': {
+    borderRadius: '16px',
+    backgroundColor: '#fff',
+    '& fieldset': { borderColor: '#e2e8f0' },
+    '&:hover fieldset': { borderColor: '#cbd5e1' },
+    '&.Mui-focused fieldset': { borderColor: '#6366f1', borderWidth: '2px' },
+  },
+  '& .MuiInputLabel-root.Mui-focused': { color: '#6366f1' }
+};
 
 export default AddPatient;

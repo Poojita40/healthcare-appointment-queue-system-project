@@ -69,63 +69,42 @@ function Register() {
   };
 
   return (
-    <Box
-      sx={{
-        height: "100vh",
-        width: "100vw",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        bgcolor: colors.bg
-      }}
-    >
-      <Container maxWidth="xs">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.4 }}
-        >
-          <Paper
-            elevation={0}
-            sx={{
-              p: 5,
-              borderRadius: '24px',
-              border: `1px solid ${colors.border}`,
-              bgcolor: '#fff',
-              boxShadow: '0 4px 20px rgba(0,0,0,0.02)'
-            }}
-          >
-            <IconButton
-              onClick={() => navigate("/")}
-              sx={{ mb: 1, ml: -1, color: colors.indigo }}
-            >
+    <Box sx={{ 
+      position: 'relative',
+      height: "100vh", 
+      width: "100vw", 
+      display: "flex", 
+      justifyContent: "center", 
+      alignItems: "center", 
+      bgcolor: 'transparent',
+      overflow: 'hidden'
+    }}>
+      {/* Background Blobs */}
+      <Box className="glass-blob" sx={{ top: '-10%', right: '-10%', width: '40vw', height: '40vw', background: 'rgba(99, 102, 241, 0.15)' }} />
+      <Box className="glass-blob" sx={{ bottom: '10%', left: '-5%', width: '30vw', height: '30vw', background: 'rgba(168, 85, 247, 0.15)', animationDelay: '-5s' }} />
+
+      <Container maxWidth="xs" sx={{ position: 'relative', zIndex: 1 }}>
+        <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6 }}>
+          <Box className="glass-card" sx={{ p: 5, bgcolor: 'rgba(255,255,255,0.85)' }}>
+            <IconButton onClick={() => navigate("/")} sx={{ mb: 2, ml: -1, color: colors.indigo }}>
               <ArrowBackIcon />
             </IconButton>
 
-            <Box sx={{ textAlign: 'center', mb: 3 }}>
-              <Avatar
-                sx={{
-                  bgcolor: alpha(colors.indigo, 0.1),
-                  color: colors.indigo,
-                  width: 60,
-                  height: 60,
-                  mx: 'auto',
-                  mb: 2
-                }}
-              >
-                <PersonAddAlt1Icon sx={{ fontSize: 30 }} />
+            <Box sx={{ textAlign: 'center', mb: 4 }}>
+              <Avatar component={motion.div} whileHover={{ scale: 1.1 }} sx={{ bgcolor: alpha(colors.indigo, 0.1), color: colors.indigo, width: 72, height: 72, mx: 'auto', mb: 2, boxShadow: `0 8px 24px ${alpha(colors.indigo, 0.2)}` }}>
+                <PersonAddAlt1Icon sx={{ fontSize: 40 }} />
               </Avatar>
 
-              <Typography variant="h5" sx={{ fontWeight: 800, color: colors.slate }}>
-                Join <span style={{ color: colors.indigo }}>Network</span>
+              <Typography variant="h4" sx={{ fontWeight: 900, color: colors.slate, letterSpacing: '-1px' }}>
+                Join <span className="text-gradient">Network</span>
               </Typography>
 
-              <Typography variant="body2" sx={{ color: '#64748b', mt: 1 }}>
+              <Typography variant="body2" sx={{ color: '#64748b', mt: 1.5, fontWeight: 600 }}>
                 Create your Administrator identity
               </Typography>
             </Box>
 
-            <Stack spacing={2.5}>
+            <Stack spacing={3}>
               <TextField
                 fullWidth
                 label="Full Name"
@@ -173,26 +152,28 @@ function Register() {
               />
 
               <Button
+                component={motion.button}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 variant="contained"
                 fullWidth
                 disabled={loading}
                 onClick={register}
+                className="btn-premium"
                 sx={{
                   mt: 2,
-                  py: 1.8,
-                  borderRadius: '12px',
+                  py: 2,
                   bgcolor: colors.indigo,
-                  fontWeight: 700,
-                  textTransform: 'none',
+                  fontWeight: 800,
                   fontSize: '1rem',
-                  boxShadow: `0 8px 20px ${alpha(colors.indigo, 0.25)}`,
-                  '&:hover': { bgcolor: '#4f46e5', boxShadow: 'none' }
+                  boxShadow: `0 12px 24px ${alpha(colors.indigo, 0.3)}`,
+                  '&:hover': { bgcolor: '#4f46e5' }
                 }}
               >
                 {loading ? "Creating Profile..." : "Initialize Account"}
               </Button>
 
-              <Typography variant="body2" sx={{ textAlign: 'center', color: '#94a3b8', mt: 2 }}>
+              <Typography variant="body2" sx={{ textAlign: 'center', color: '#64748b', mt: 3, fontWeight: 500 }}>
                 Already a member?{" "}
                 <span
                   style={{ color: colors.indigo, cursor: 'pointer', fontWeight: 800 }}
@@ -202,14 +183,14 @@ function Register() {
                 </span>
               </Typography>
             </Stack>
-          </Paper>
+          </Box>
         </motion.div>
       </Container>
 
-      <Box sx={{ position: 'fixed', bottom: 30, display: 'flex', alignItems: 'center', gap: 1, opacity: 0.5 }}>
-        <ShowChartIcon sx={{ fontSize: 16, color: "#64748b" }} />
-        <Typography variant="caption" sx={{ fontWeight: 800, color: '#64748b', letterSpacing: '2px' }}>
-          SMARTHEALTH OS
+      <Box sx={{ position: 'fixed', bottom: 30, display: 'flex', alignItems: 'center', gap: 1.5, opacity: 0.6 }}>
+        <ShowChartIcon sx={{ fontSize: 20, color: colors.indigo }} />
+        <Typography variant="caption" sx={{ fontWeight: 900, color: colors.slate, letterSpacing: '4px' }}>
+          SMARTHEALTH OS v4.2
         </Typography>
       </Box>
     </Box>

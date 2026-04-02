@@ -39,24 +39,23 @@ function ViewQueue() {
         setLoading(false);
       })
       .catch(() => {
-        // Mock data for demo
-        setQueue([
-          { id: 1, patientName: "John Doe", doctorName: "Dr. House", status: "In Consultation", waitTime: "0 min" },
-          { id: 2, patientName: "Jane Smith", doctorName: "Dr. Murphy", status: "Waiting", waitTime: "15 min" },
-          { id: 3, patientName: "Alice Brown", doctorName: "Dr. House", status: "Waiting", waitTime: "30 min" },
-          { id: 4, patientName: "Bob Wilson", doctorName: "Dr. Murphy", status: "Waiting", waitTime: "45 min" },
-        ]);
         setLoading(false);
       });
   };
 
-  const updateStatus = (id, newStatus) => {
-    // API call logic would go here
-    setQueue(prev => prev.map(item => item.id === id ? { ...item, status: newStatus } : item));
+  const updateStatus = async (id, newStatus) => {
+    try {
+      await api.patch(`/api/appointments/${id}/status`, null, { params: { status: newStatus } });
+      toast.success(`Patient status updated to ${newStatus}`);
+      fetchQueue();
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to update status");
+    }
   };
 
-  const currentPatient = queue.find(p => p.status === "In Consultation");
-  const waitingPatients = queue.filter(p => p.status === "Waiting");
+  const currentPatient = queue.find(p => p.status === "IN_CONSULTATION");
+  const waitingPatients = queue.filter(p => p.status === "BOOKED" || p.status === "Waiting");
 
   return (
     <Box sx={{ minHeight: "100vh", py: 8 }}>
@@ -76,11 +75,11 @@ function ViewQueue() {
                   <Box>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 3, mb: 4 }}>
                       <Avatar sx={{ width: 80, height: 80, bgcolor: '#6366f1', fontSize: '2rem', fontWeight: 800 }}>
-                        {currentPatient.patientName[0]}
+                        {currentPatient.patient?.name?.[0] || "?"}
                       </Avatar>
                       <Box>
-                        <Typography variant="h4" sx={{ fontWeight: 800 }}>{currentPatient.patientName}</Typography>
-                        <Chip label={`Assigned to ${currentPatient.doctorName}`} color="primary" variant="outlined" sx={{ mt: 1, fontWeight: 700 }} />
+                        <Typography variant="h4" sx={{ fontWeight: 800 }}>{currentPatient.patient?.name}</Typography>
+                        <Chip label={`Assigned to ${currentPatient.doctor?.name}`} color="primary" variant="outlined" sx={{ mt: 1, fontWeight: 700 }} />
                       </Box>
                     </Box>
                     <Divider sx={{ mb: 4 }} />
@@ -90,7 +89,7 @@ function ViewQueue() {
                       <Button 
                         fullWidth variant="contained" 
                         startIcon={<CheckCircleOutlineIcon />}
-                        onClick={() => updateStatus(currentPatient.id, "Completed")}
+                        onClick={() => updateStatus(currentPatient.id, "COMPLETED")}
                         sx={{ bgcolor: '#10b981', borderRadius: '12px', py: 1.5, fontWeight: 700, '&:hover': { bgcolor: '#059669' } }}
                       >
                         Finish Session
@@ -102,7 +101,6 @@ function ViewQueue() {
               ) : (
                 <Box sx={{ py: 6, textAlign: 'center' }}>
                   <Typography variant="body1" sx={{ color: '#94a3b8' }}>No active consultation. Call next patient.</Typography>
-                  <Button variant="outlined" sx={{ mt: 3, borderRadius: '12px', fontWeight: 700 }}>Call Next</Button>
                 </Box>
               )}
             </Paper>
@@ -137,22 +135,22 @@ function ViewQueue() {
                         {index + 1}
                       </Box>
                       <Box>
-                        <Typography variant="subtitle1" sx={{ fontWeight: 800 }}>{p.patientName}</Typography>
+                        <Typography variant="subtitle1" sx={{ fontWeight: 800 }}>{p.patient?.name}</Typography>
                         <Typography variant="caption" sx={{ color: '#64748b', display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                          <AccessTimeIcon sx={{ fontSize: 14 }} /> {p.waitTime} wait
+                          <AccessTimeIcon sx={{ fontSize: 14 }} /> {p.waitTime || "10 min"} wait
                         </Typography>
                       </Box>
                     </Box>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
                       <Box sx={{ display: { xs: 'none', md: 'block' }, textAlign: 'right' }}>
                         <Typography variant="caption" sx={{ color: '#64748b', fontWeight: 600 }}>DOCTOR</Typography>
-                        <Typography variant="body2" sx={{ fontWeight: 700 }}>{p.doctorName}</Typography>
+                        <Typography variant="body2" sx={{ fontWeight: 700 }}>{p.doctor?.name}</Typography>
                       </Box>
                       <Button 
                         variant="contained" 
                         size="small"
                         startIcon={<PlayArrowIcon />}
-                        onClick={() => updateStatus(p.id, "In Consultation")}
+                        onClick={() => updateStatus(p.id, "IN_CONSULTATION")}
                         sx={{ bgcolor: '#6366f1', borderRadius: '8px', fontWeight: 700, textTransform: 'none' }}
                       >
                         Call
