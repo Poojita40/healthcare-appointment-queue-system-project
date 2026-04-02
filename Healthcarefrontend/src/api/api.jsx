@@ -22,4 +22,4 @@ export const addPatient = (email, token) => {
   });
 };
 
-export default a
+export default api;

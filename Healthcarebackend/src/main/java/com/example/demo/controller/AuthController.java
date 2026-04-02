@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
@@ -21,17 +23,14 @@ public class AuthController {
 
     // LOGIN
     @PostMapping("/login")
-    public User login(@RequestBody User user) {
-
+    public ResponseEntity<User> login(@RequestBody User user) {
         User existingUser = usersRepository.findByEmail(user.getEmail());
 
-        if(existingUser != null &&
-           existingUser.getPassword().equals(user.getPassword())){
-
-            return existingUser;
-
+        if (existingUser != null &&
+            existingUser.getPassword().equals(user.getPassword())) {
+            return ResponseEntity.ok(existingUser);
         }
 
-        return null;
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 }

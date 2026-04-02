@@ -145,7 +145,7 @@ function BookAppointment() {
                       <Box sx={{ textAlign: 'center' }}>
                         <Avatar sx={{ width: 60, height: 60, mx: 'auto', mb: 2, bgcolor: '#10b981' }}>{d.name.split(' ').pop()[0]}</Avatar>
                         <Typography variant="subtitle1" sx={{ fontWeight: 800 }}>{d.name}</Typography>
-                        <Chip label={d.specialty || "General"} size="small" sx={{ mt: 1, bgcolor: '#eef2ff', color: '#6366f1', fontWeight: 700 }} />
+                        <Chip label={d.specialization || "General"} size="small" sx={{ mt: 1, bgcolor: '#eef2ff', color: '#6366f1', fontWeight: 700 }} />
                       </Box>
                     </Paper>
                   </Grid>

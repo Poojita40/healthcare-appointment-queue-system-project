@@ -12,7 +12,7 @@ import {
   alpha,
   InputAdornment
 } from "@mui/material";
-import {  } from "framer-motion";
+import { motion } from "framer-motion";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 

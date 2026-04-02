@@ -3,7 +3,7 @@ import {
   TextField, Button, Typography, Box, InputAdornment, Avatar,
   Paper, Stack, IconButton, alpha, Container
 } from "@mui/material";
-import {  } from "framer-motion"; // ✅ FIXED
+import { motion } from "framer-motion"; // ✅ FIXED
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 

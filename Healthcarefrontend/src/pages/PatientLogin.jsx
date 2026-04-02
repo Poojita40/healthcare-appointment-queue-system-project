@@ -13,7 +13,7 @@ import {
   IconButton,
   alpha
 } from "@mui/material";
-import {  } from "framer-motion"; // ✅ FIXED
+import { motion } from "framer-motion"; // ✅ FIXED
 import { toast } from "react-hot-toast";
 import {
   UserCircle,
