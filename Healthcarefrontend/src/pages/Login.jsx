@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   TextField, Button, Typography, Box, InputAdornment, Avatar,
   Paper, Stack, IconButton, alpha, Container
@@ -23,6 +23,13 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState({ email: "", password: "" });
+
+  useEffect(() => {
+    if (localStorage.getItem("token") === "loggedin") {
+      navigate("/dashboard");
+    }
+  }, [navigate]);
+
 
   const colors = { indigo: "#6366f1", slate: "#1e293b", border: "#eef2f6", bg: "#f8fafc" };
 

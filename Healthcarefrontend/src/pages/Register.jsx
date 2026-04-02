@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   TextField,
   Button,
@@ -33,6 +33,13 @@ function Register() {
     email: "",
     password: ""
   });
+
+  useEffect(() => {
+    if (localStorage.getItem("token") === "loggedin") {
+      navigate("/dashboard");
+    }
+  }, [navigate]);
+
 
   const colors = {
     indigo: "#6366f1",
