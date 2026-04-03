@@ -54,7 +54,8 @@ public class ChatController {
 
                 // ✅ SAFE EMAIL (NO CRASH)
                 try {
-                    queueService.addPatientAndNotify(email, token);
+                    String name = userNames.getOrDefault(sessionId, "Unknown Patient");
+                    queueService.addPatientAndNotify(name, email, token);
                 } catch (Exception e) {
                     System.out.println("Email failed, but continuing...");
                 }

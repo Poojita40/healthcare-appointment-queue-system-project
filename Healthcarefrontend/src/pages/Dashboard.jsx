@@ -40,7 +40,12 @@ function Dashboard() {
       .catch(err => console.error("Error fetching dashboard stats:", err));
   }, []);
 
-  const today = "Thursday, April 2, 2026";
+  const today = new Date().toLocaleDateString('en-US', {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric'
+  });
 
   const colors = {
     indigo: "#6366f1", emerald: "#10b981", amber: "#f59e0b",

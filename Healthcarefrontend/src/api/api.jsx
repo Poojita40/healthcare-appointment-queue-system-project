@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // ✅ CHANGE THIS (IMPORTANT)
-const BASE_URL = "https://healthcare-backend-api-vnfk.onrender.com";
+const BASE_URL = "http://localhost:8081";
 
 const api = axios.create({
   baseURL: BASE_URL,

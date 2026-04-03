@@ -16,20 +16,21 @@ public class EmailService {
         System.out.println("📩 Sending email to: " + toEmail);
 
         try {
-            SimpleMailMessage message = new SimpleMailMessage();
+            jakarta.mail.internet.MimeMessage mimeMessage = mailSender.createMimeMessage();
+            org.springframework.mail.javamail.MimeMessageHelper helper = new org.springframework.mail.javamail.MimeMessageHelper(mimeMessage, "utf-8");
 
-            message.setFrom("poojitalakkakula@gmail.com"); // 🔥 VERY IMPORTANT
-            message.setTo(toEmail);
-            message.setSubject(subject);
-            message.setText(body);
+            helper.setFrom("poojitalakkakula@gmail.com", "Smart Health");
+            helper.setTo(toEmail);
+            helper.setSubject(subject);
+            helper.setText(body, false);
 
-            mailSender.send(message);
+            mailSender.send(mimeMessage);
 
             System.out.println("✅ Email sent successfully!");
 
         } catch (Exception e) {
             System.out.println("❌ Email failed: " + e.getMessage());
-            throw e;
+            throw new RuntimeException(e);
         }
     }
 }

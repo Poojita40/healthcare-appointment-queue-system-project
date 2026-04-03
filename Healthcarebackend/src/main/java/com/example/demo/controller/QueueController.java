@@ -18,12 +18,13 @@ public class QueueController {
 
     @PostMapping("/add")
     public String addPatient(
+            @RequestParam(required = false, defaultValue = "Unknown") String name,
             @RequestParam String email,
             @RequestParam int token) {
 
         System.out.println("Adding patient: " + email + " Token: " + token);
 
-        return queueService.addPatientAndNotify(email, token);
+        return queueService.addPatientAndNotify(name, email, token);
     }
 
     // ✅ Get Queue Status by Phone
